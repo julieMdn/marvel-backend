@@ -10,20 +10,16 @@ app.use(express.json());
 // Get a list of comics
 app.get("/comics", async (req, res) => {
   try {
-    const apiKey = req.headers.apikey;
+    const apiKey = process.env.API_KEY;
 
     if (!apiKey) {
       return res.status(400).json({ error: "API key is required." });
     }
 
-    const response = await axios.get(
-      "https://lereacteur-marvel-api.herokuapp.com/comics",
-      {
-        params: {
-          apiKey: apiKey,
-        },
-      }
-    );
+    const url = `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${apiKey}`;
+
+    const response = await axios.get(url);
+
     res.json(response.data);
   } catch (error) {
     console.error("Erreur lors de la requête vers l'API de comics:", error);
@@ -36,19 +32,15 @@ app.get("/comics", async (req, res) => {
 // Get a list of characters
 app.get("/characters", async (req, res) => {
   try {
-    const apiKey = req.headers.apikey;
+    const apiKey = process.env.API_KEY;
 
     if (!apiKey) {
       return res.status(400).json({ error: "API key is required." });
     }
-    const response = await axios.get(
-      "https://lereacteur-marvel-api.herokuapp.com/characters",
-      {
-        params: {
-          apiKey: req.headers.apikey,
-        },
-      }
-    );
+
+    const url = `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${apiKey}`;
+
+    const response = await axios.get(url);
 
     res.json(response.data);
   } catch (error) {
