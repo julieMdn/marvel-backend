@@ -7,6 +7,17 @@ app.use(cors());
 
 app.use(express.json());
 
+app.get("/", async (req, res) => {
+  try {
+    res.json({ message: "Hi" });
+  } catch (error) {
+    console.error("Erreur lors de la requête vers l'API de comics:", error);
+    res
+      .status(500)
+      .json({ error: "Erreur lors de la requête vers l'API de comics." });
+  }
+});
+
 // Get a list of comics
 app.get("/comics", async (req, res) => {
   try {
